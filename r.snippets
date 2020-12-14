@@ -77,10 +77,13 @@ snippet open
 
 # open this snippets file in rstudio
 snippet rsnip
-	rstudioapi::navigateToFile("~/.R/snippets/r.snippets")
+	rstudioapi::navigateToFile("~/.config/rstudio/snippets/r.snippets")
 
 snippet rmsnip
-	rstudioapi::navigateToFile("~/.R/snippets/markdown.snippets")
+	rstudioapi::navigateToFile("~/.config/rstudio/snippets/markdown.snippets")
+
+snippet pysnip
+	rstudioapi::navigateToFile("~/.config/rstudio/snippets/python.snippets")
 
 # set error option to recover
 snippet erec
@@ -97,7 +100,7 @@ snippet ii
 snippet pysnip
 	rstudioapi::navigateToFile("~/.R/snippets/python.snippets")
 
-# open the cpp snippets file in rstudio	
+# open the cpp snippets file in rstudio
 snippet cppsnip
 	rstudioapi::navigateToFile("~/.R/snippets/c_cpp.snippets")
 
