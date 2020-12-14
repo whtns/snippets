@@ -1,0 +1,257 @@
+# install a development version of a package
+
+snippet newrmd
+	rmarkdown::draft("Untitled.Rmd", template = "~/.config/templates/rmarkdown")
+
+snippet lsdrive
+	drive_find(q = "'root' in parents")
+
+#upload a directory to google drive
+snippet drivedir
+	fs::dir_ls(${1}, glob = ${2}) %>%
+	purrr::map(drive_upload)
+
+snippet tryc
+	${1:variable} <- tryCatch({
+	    ${2}
+	}, warning = function(w) {
+	    message(sprintf("Warning in %s: %s", deparse(w[["call"]]), w[["message"]]))
+	    ${3}
+	}, error = function(e) {
+	    message(sprintf("Error in %s: %s", deparse(e[["call"]]), e[["message"]]))
+	    ${4}
+	}, finally = {
+	    ${5}
+	})
+
+snippet term
+	rstudioapi::terminalActivate()
+
+snippet roptparse
+	library("optparse")
+	option_list <- list(
+	  make_option(c("-v", "--verbose"), action="store_true", default=TRUE,
+	              help="Print extra output [default]"),
+	  make_option(c("-q", "--quietly"), action="store_false",
+	              dest="verbose", help="Print little output"),
+	  make_option(c("-s", "--samples"), type="character",
+	              default = NA,
+	              help="paths of samples",
+	              metavar="samples")
+	)
+
+	opt = parse_args(OptionParser(option_list=option_list))
+
+	if (!is.na(opt$samples)) {
+	  sample_files <- opt$samples
+	} else {
+	  stop("Please provide sample files for analysis! See script usage (--help)")
+	}
+
+snippet develinstall
+	withr::with_libpaths("/dataVolume/storage/rpkgs/devel_install/", devtools::install(dependencies = FALSE, quick = TRUE))
+
+snippet prodinstall
+	devtools::install(upgrade = FALSE)
+
+snippet <
+	%<-%
+
+# reload an installed r package
+snippet rload
+	devtools::reload(pkgload::inst(${1}))
+
+# devtools document
+snippet doc
+	`r devtools::document()`
+
+snippet dbg
+	debug(${1})
+
+snippet dbgo
+	debugonce(${1})
+
+# open a file in rstudio
+snippet open
+	rstudioapi::navigateToFile("${1}")
+
+# open this snippets file in rstudio
+snippet rsnip
+	rstudioapi::navigateToFile("~/.R/snippets/r.snippets")
+
+snippet rmsnip
+	rstudioapi::navigateToFile("~/.R/snippets/markdown.snippets")
+
+# set error option to recover
+snippet erec
+	options(error = recover)
+
+# set error option to null
+snippet enull
+	options(error=NULL)
+
+snippet ii
+	identity()
+
+# open the python snippets file in rstudio
+snippet pysnip
+	rstudioapi::navigateToFile("~/.R/snippets/python.snippets")
+
+snippet lib
+	library(${1:package})
+
+snippet req
+	require(${1:package})
+
+snippet src
+	source("${1:file.R}")
+
+snippet ret
+	return(${1:code})
+
+snippet mat
+	matrix(${1:data}, nrow = ${2:rows}, ncol = ${3:cols})
+
+snippet sg
+	setGeneric("${1:generic}", function(${2:x, ...}) {
+		standardGeneric("${1:generic}")
+	})
+
+snippet sm
+	setMethod("${1:generic}", ${2:class}, function(${2:x, ...}) {
+		${0}
+	})
+
+snippet sc
+	setClass("${1:Class}", slots = c(${2:name = "type"}))
+
+snippet if
+	if (${1:condition}) {
+		${0}
+	}
+
+snippet el
+	else {
+		${0}
+	}
+
+snippet ei
+	else if (${1:condition}) {
+		${0}
+	}
+
+snippet fun
+	${1:name} <- function(${2:variables}) {
+		${0}
+	}
+
+snippet for
+	for (${1:variable} in ${2:vector}) {
+		${0}
+	}
+
+snippet while
+	while (${1:condition}) {
+		${0}
+	}
+
+snippet switch
+	switch (${1:object},
+		${2:case} = ${3:action}
+	)
+
+snippet apply
+	apply(${1:array}, ${2:margin}, ${3:...})
+
+snippet lapply
+	lapply(${1:list}, ${2:function})
+
+snippet sapply
+	sapply(${1:list}, ${2:function})
+
+snippet mapply
+	mapply(${1:function}, ${2:...})
+
+snippet tapply
+	tapply(${1:vector}, ${2:index}, ${3:function})
+
+snippet vapply
+	vapply(${1:list}, ${2:function}, FUN.VALUE = ${3:type}, ${4:...})
+
+snippet rapply
+	rapply(${1:list}, ${2:function})
+
+snippet ts
+	`r paste("#", date(), "------------------------------\n")`
+
+snippet shinyapp
+	library(shiny)
+
+	ui <- fluidPage(
+	  ${0}
+	)
+
+	server <- function(input, output, session) {
+
+	}
+
+	shinyApp(ui, server)
+
+snippet shinymod
+	${1:name}_UI <- function(id) {
+	  ns <- NS(id)
+	  tagList(
+		${0}
+	  )
+	}
+
+	${1:name} <- function(input, output, session) {
+
+	}
+
+snippet rpl
+	repl_python()
+
+snippet dflt
+	`r paste0("library('", CUSTOM_DEFAULT_PACKAGES, "')", collapse = "\n")`
+
+snippet cn
+	colnames($1)
+
+snippet sec
+	# $1------------------------------
+
+snippet pd
+	proj_dir = rprojroot::find_root(criterion = rprojroot::has_file_pattern("*.Rproj"))
+
+snippet graphic
+	knitr::include_graphics("$1")
+
+#shiny snippets
+snippet module
+	${1:name}ui <- function(id){
+	    ns <- NS(id)
+	    tagList(
+
+	        )
+	    }
+
+	${1:name} <- function(input, output, session){
+	    ns <- session\$ns
+	}
+
+	# Copy in UI
+	${1:name}ui("${1:name}ui")
+
+	# Copy in server
+	callModule(${1:name}, "${1:name}ui")
+
+
+snippet sinewdata
+	sinew::makeOxygen(${1:name}, add_fields = "source")
+
+snippet driveupload
+	googledrive::drive_upload("${1:name}", "cobrinik_lab/rb_exome/drafts/new_draft/")
+
+snippet rn
+	```${1}```{r}${2}

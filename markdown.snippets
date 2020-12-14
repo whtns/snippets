@@ -1,0 +1,49 @@
+# open this snippets file in rstudio
+snippet rmsnip
+	`r rstudioapi::navigateToFile("~/.R/snippets/markdown.snippets")`
+
+snippet [
+	[${1:label}](${2:location})
+
+snippet ![
+	![${1:label}](${2:location})
+
+snippet r
+	```{r ${1:label}, ${2:options}}
+	${0}
+	```
+
+snippet rcpp
+	```{r, engine='Rcpp'}
+	#include <Rcpp.h>
+	using namespace Rcpp;
+
+	${0}
+
+	```
+
+snippet py
+	```{python}
+	${1}
+	```
+
+snippet r
+	```{r}
+	${1}
+	```
+
+snippet sh
+	```{bash}
+	${1}
+	```
+
+snippet page
+	=====================================
+	
+snippet row
+	Row
+	-------------------------------------
+	
+snippet column
+	Column {data-width=400}
+	-------------------------------------
